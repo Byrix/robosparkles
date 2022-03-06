@@ -5,15 +5,17 @@ author: byrix
 license: GPL-3.0 */
 
 const { default: axios } = require('axios');
+require('dotenv').config();
 
 module.exports = class Quotes {
-    #util; #responses; #settings;
+    #util; #responses; #settings; #discordToken;
 
     constructor(util) {
         this.#util = util;
         var data = this.#util.readFile('C:/Users/Sean/Desktop/RoboSparkles/robosparkles-3.0/twitch/data/quotes.json')
         this.#settings = data['settings'];
         this.#responses = data['responses'];
+        this.#discordToken = process.env.DISCORD_TOKEN;
     }
 
     command(msg, user) {
@@ -99,14 +101,14 @@ module.exports = class Quotes {
                             content: msgContent
                         },{
                             headers: {
-                                'Authorization': 'Bot ODc2ODE5MjMyOTc1OTA4OTE1.YRpniw.VUaN4l2fJ2mjRIgXISA-h3O7-rI',
+                                'Authorization': `Bot ${this.#discordToken}`,
                                 'User-Agent': 'RoboSparkles (twitch.tv/robosparkles, v0.1)',
                                 'Content-Type': "application/json"
                             }
                         }).then((res) => {
                             axios.get(`https://discord.com/api/channels/${this.#settings.discordId}`, {
                                 headers: {
-                                    'Authorization': 'Bot ODc2ODE5MjMyOTc1OTA4OTE1.YRpniw.VUaN4l2fJ2mjRIgXISA-h3O7-rI',
+                                    'Authorization': `Bot ${this.#discordToken}`,
                                     'User-Agent': 'RoboSparkles (twitch.tv/robosparkles, v0.1)',
                                     'Content-Type': "application/json"
                                 }
@@ -147,7 +149,7 @@ module.exports = class Quotes {
             if (quote.discord_id) {
                 axios.delete(`https://discord.com/api/channels/${this.#settings.discordId}/messages/${quote.discord_id}`, {
                     headers: {
-                        'Authorization': 'Bot ODc2ODE5MjMyOTc1OTA4OTE1.YRpniw.VUaN4l2fJ2mjRIgXISA-h3O7-rI',
+                        'Authorization': `Bot ${this.#discordToken}`,
                         'User-Agent': 'RoboSparkles (twitch.tv/robosparkles, v0.1)',
                         'Content-Type': "application/json"
                     }
@@ -170,7 +172,7 @@ module.exports = class Quotes {
                     content: quote.game==="Unknown" ? `> ${newQuote}` : `> ${newQuote}\n${quote.game}`
                 },{
                     headers: {
-                        'Authorization': 'Bot ODc2ODE5MjMyOTc1OTA4OTE1.YRpniw.VUaN4l2fJ2mjRIgXISA-h3O7-rI',
+                        'Authorization': `Bot ${this.#discordToken}`,
                         'User-Agent': 'RoboSparkles (twitch.tv/robosparkles, v0.1)',
                         'Content-Type': "application/json"
                     }
