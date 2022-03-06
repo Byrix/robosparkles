@@ -1,0 +1,9 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite as follows."
+authors:
+- family-names: "Brooker"
+  given-names: "Sean"
+title: "RoboSparkles"
+version: 3.0.0
+date-released: 2022-02-04
+url: "https://github.com/byrix/robosparkles-3.0"

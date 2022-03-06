@@ -1,0 +1,12 @@
+{
+    "settings": {
+        "permissions": { "edit": 1 }
+    },
+    "responses": {
+        "commandUnknown": "I don't know that command!",
+        "commandAdd": "I've added the $[commandTrigger] command!",
+        "commandRemove": "I've removed the $[commandTrigger] command!",
+        "commandUpdate": "I've updated the $[commandTrigger] command!",
+        "commandPermissions": "You don't have permission to do that, $[user]"
+    }
+}

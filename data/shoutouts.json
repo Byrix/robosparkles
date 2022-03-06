@@ -1,0 +1,7 @@
+{
+    "settings": { "permission": 1 },
+    "responses": {
+        "shoutoutDefault": "Generic shoutout message here! $[targetUrl]",
+        "shoutoutPermission": " "
+    }
+}
