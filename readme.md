@@ -7,5 +7,6 @@ Simple Twitch chatbot built with NodeJS and MySQL with the main features expecte
  - Quotes system
  - Different permission levels
 ## License
-> You can see the full license [here](LICENSE.md);
+> You can see the full license [here](LICENSE.md)
+
 This project is licensed under the GNU General Public License 3.0. 
