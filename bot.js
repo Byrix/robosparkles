@@ -8,6 +8,7 @@ require('dotenv').config();
 const { Chat, Api } = require('twitch-js');
 const axios = require('axios');
 const fs = require('fs'), os = require('os');
+const { util } = require('./systems');
 
 const refreshToken = process.env.REFRESH_TOKEN;
 const clientId = process.env.CLIENT_ID;
@@ -59,6 +60,7 @@ const run = async() => {
 
                 if (!privmsg.message.startsWith("!")) { return; }
                 switch(privmsg.message.split(" ")[0]) {
+                    case "!test": util.dbToJson("foo", "bar");
                     case "!bot": command(privmsg, user); break;
                     case "!quote": quote.command(privmsg, user); break;  
                     case "!moderation":  moderation.command(privmsg, user); break;
