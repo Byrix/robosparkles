@@ -12,7 +12,7 @@ module.exports = class Quotes {
 
     constructor(util) {
         this.#util = util;
-        var data = this.#util.readFile('C:/Users/Sean/Desktop/RoboSparkles/robosparkles-3.0/twitch/data/quotes.json')
+        var data = this.#util.readFile('data/quotes.json')
         this.#settings = data['settings'];
         this.#responses = data['responses'];
         this.#discordToken = process.env.DISCORD_TOKEN;
@@ -65,7 +65,7 @@ module.exports = class Quotes {
 	
         // Update cooldown data
         this.#settings['lastCalls'][prmGroup] = +new Date;
-        this.#util.saveFile({'settings': this.#settings, 'responses': this.#responses}, 'C:/Users/Sean/Desktop/RoboSparkles/robosparkles-3.0/twitch/data/quotes.json');
+        this.#util.saveFile({'settings': this.#settings, 'responses': this.#responses}, 'data/quotes.json');
     }
     #addQuote(quote, user, msg) {
         this.#util.twitchApi.get('channels', { search: { broadcaster_id: +msg.tags.roomId }}) 

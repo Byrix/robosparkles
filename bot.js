@@ -40,7 +40,7 @@ const run = async() => {
 
     const Systems = require('./systems');
 
-    util = new Systems.util(new Api({ token, clientId, onAuthenticationFailure }), sendMessage, deleteMessage),
+    const util = new Systems.util(new Api({ token, clientId, onAuthenticationFailure }), sendMessage, deleteMessage),
     quote = new Systems.quote(util),
     moderation = new Systems.moderation(util),
     commands = new Systems.commands(util),
@@ -60,7 +60,6 @@ const run = async() => {
 
                 if (!privmsg.message.startsWith("!")) { return; }
                 switch(privmsg.message.split(" ")[0]) {
-                    case "!test": util.dbToJson("foo", "bar");
                     case "!bot": command(privmsg, user); break;
                     case "!quote": quote.command(privmsg, user); break;  
                     case "!moderation":  moderation.command(privmsg, user); break;
@@ -69,6 +68,28 @@ const run = async() => {
                 }
             });
         });
+
+        bot.on("WHISPER", msg => {
+            moderation.checkUser(msg);
+
+            util.db.query(`SELECT * FROM users WHERE id LIKE '${msg.tags.userId}'`, function (err, res, fields) {
+                if (err) throw err;
+                var user = res[0];
+
+                if (user.permission_level > 2 ) return; 
+
+                let privmsg = {'message': msg.message, 'channel': '#byrix__', 'tags': { 'displayName': msg.tags.displayName, 'roomId': '000', 'userId': msg.tags.userId }};
+
+                if (!msg.message.startsWith("!")) { return; }
+                switch(msg.message.split(" ")[0]) {
+                    case "!bot": command(privmsg, user); break;
+                    case "!quote": quote.command(privmsg, user); break;  
+                    case "!moderation":  moderation.command(privmsg, user); break;
+                    case "!so": shoutout.command(privmsg, user); break;
+                    default: commands.command(privmsg, user); break;
+                }
+            });
+        })
     });
 
     function sendMessage(channel, msg) { 
