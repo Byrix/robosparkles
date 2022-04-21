@@ -91,7 +91,10 @@ module.exports = class Moderation {
         if (!this.#settings.link.enabled || this.#settings.link.perm_required >= user.permission_level) { return; }
 
         if (/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(msg.message)) { 
-            this.#util.deleteMessage(msg.id, msg.channel);
+            if (msg.message.search(/\.\.+/) !== -1) return;
+            if (msg.message.search(/twitch\.tv/i) !== -1) return;
+
+            this.#util.deleteMessage(msg.tags.id, msg.channel);
             this.#util.sendMessage(msg.channel, this.#responses["invalid-link"]);
         }
     }
